@@ -1,38 +1,71 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Connexion</title>
-</head>
-<body>
-    <h1>Connexion</h1>
+@extends('layouts.guest')
 
-    {{-- $errors est une variable que Laravel remplit automatiquement
-         quand back()->withErrors([...]) a été appelé dans le Controller.
-         S'il n'y a pas d'erreur, ce bloc ne s'affiche simplement pas. --}}
+@section('title', 'Connexion - Convocations CCF')
+
+@section('content')
+
+<div class="auth-card">
+
+    <h1 class="auth-title">
+        Convocations CCF
+    </h1>
+
+    <p class="auth-subtitle">
+        Connectez-vous pour accéder à votre espace
+    </p>
+
     @if ($errors->any())
-        <p style="color:red">{{ $errors->first() }}</p>
+        <div class="error-box">
+            {{ $errors->first() }}
+        </div>
     @endif
 
     <form method="POST" action="{{ route('login') }}">
-        {{-- @csrf génère un champ caché avec un jeton de sécurité.
-             Laravel refuse toute requête POST qui ne le contient pas :
-             ça empêche un site tiers d'envoyer un faux formulaire à ta place. --}}
+
         @csrf
 
-        <label>
-            Email :
-            <input type="email" name="email" value="{{ old('email') }}">
-        </label>
-        <br>
+        <div class="form-group">
 
-        <label>
-            Mot de passe :
-            <input type="password" name="password">
-        </label>
-        <br>
+            <label for="email">
+                Adresse e-mail
+            </label>
 
-        <button type="submit">Se connecter</button>
+            <input
+                class="form-control"
+                type="email"
+                id="email"
+                name="email"
+                value="{{ old('email') }}"
+                placeholder="exemple@email.fr"
+                required
+                autofocus
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="password">
+                Mot de passe
+            </label>
+
+            <input
+                class="form-control"
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Votre mot de passe"
+                required
+            >
+
+        </div>
+
+        <button class="btn auth-button" type="submit">
+            Se connecter
+        </button>
+
     </form>
-</body>
-</html>
+
+</div>
+
+@endsection
